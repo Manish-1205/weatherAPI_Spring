@@ -23,8 +23,11 @@ public class WeatherService {
                 + "?q=" + city
                 + "&appid=" + apiKey
                 + "&units=metric";
+
+        //Hitting external api
         JsonNode response = restTemplate.getForObject(url, JsonNode.class);
 
+        //filtering the response to weather dto
         WeatherDTO weatherDTO = new WeatherDTO();
 
         weatherDTO.setCity(response.get("name").asText());

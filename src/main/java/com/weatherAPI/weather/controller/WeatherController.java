@@ -16,6 +16,7 @@ public class WeatherController {
         this.weatherService = weatherService;
     }
 
+    //get weather api
     @GetMapping
     public WeatherDTO getWeather(@RequestBody WeatherRequest weatherRequest) {
         return weatherService.getWeather(weatherRequest.getCity());
