@@ -1,8 +1,10 @@
 package com.weatherAPI.weather.services;
 
+import com.weatherAPI.weather.dto.WeatherDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import tools.jackson.databind.JsonNode;
 
 @Service
 public class WeatherService {
@@ -15,12 +17,24 @@ public class WeatherService {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public String getWeather(String city) {
+    public WeatherDTO getWeather(String city) {
 
         String url = apiUrl
                 + "?q=" + city
                 + "&appid=" + apiKey
                 + "&units=metric";
-        return restTemplate.getForObject(url, String.class);
+        JsonNode response = restTemplate.getForObject(url, JsonNode.class);
+
+        WeatherDTO weatherDTO = new WeatherDTO();
+
+        weatherDTO.setCity(response.get("name").asText());
+        weatherDTO.setTemperature(response.get("main").get("temp").asDouble());
+        weatherDTO.setFeelsLike(response.get("main").get("feels_like").asDouble());
+        weatherDTO.setHumidity(response.get("main").get("humidity").asInt());
+        weatherDTO.setDescription(
+                response.get("weather").get(0).get("description").asText()
+        );
+
+        return weatherDTO;
     }
 }

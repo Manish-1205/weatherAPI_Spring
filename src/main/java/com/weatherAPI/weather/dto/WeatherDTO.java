@@ -8,6 +8,7 @@ public class WeatherDTO {
     private int humidity;
     private String description;
 
+    public WeatherDTO(){};
     public WeatherDTO(String city, double temperature, double feelsLike, int humidity, String description) {
         this.city = city;
         this.temperature = temperature;

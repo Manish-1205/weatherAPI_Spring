@@ -1,5 +1,6 @@
 package com.weatherAPI.weather.controller;
 
+import com.weatherAPI.weather.dto.WeatherDTO;
 import com.weatherAPI.weather.dto.WeatherRequest;
 import com.weatherAPI.weather.services.WeatherService;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class WeatherController {
     }
 
     @GetMapping
-    public String getWeather(@RequestBody WeatherRequest weatherRequest) {
+    public WeatherDTO getWeather(@RequestBody WeatherRequest weatherRequest) {
         return weatherService.getWeather(weatherRequest.getCity());
     }
 }
